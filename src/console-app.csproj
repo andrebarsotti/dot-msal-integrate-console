@@ -18,4 +18,8 @@
     <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" Version="2.19.3" />
   </ItemGroup>
 
+  <Target Name="CopyAppSettings" AfterTargets="AfterBuild">
+    <Copy SourceFiles="appsettings.json" DestinationFolder="$(OutDir)" />
+  </Target>
+
 </Project>

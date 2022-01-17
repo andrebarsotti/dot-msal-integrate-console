@@ -17,26 +17,53 @@ foreach (var item in accounts)
 AuthenticationResult result;
 try
 {
-    Console.WriteLine("Tentando pegar o token do Cache");
+    Console.WriteLine("Tentando pegar o token do Cache...");
     result = await pca.AcquireTokenSilent(Config.Scopes, accounts.FirstOrDefault())
                     .ExecuteAsync();
+    Console.WriteLine("Token recuperado do cache...");
 }
 catch (MsalUiRequiredException)
 {
-    Console.WriteLine("Adquirindo novo token.");
+    Console.WriteLine("Adquirindo novo token...");
     Console.WriteLine();
 
-    if (Config.UseDeviceCodeFlow)
-        result = await pca.AcquireTokenWithDeviceCode(Config.Scopes,
-            deviceCodeResult =>
+    switch (Config.AuthenticationFlow)
+    {
+        case AuthenticationFlow.DeviceCodeFlow:
+            result = await pca.AcquireTokenWithDeviceCode(Config.Scopes,
+                deviceCodeResult =>
+                {
+                    Console.WriteLine(deviceCodeResult.Message);
+                    return Task.FromResult(0);
+                }).ExecuteAsync();
+            break;
+        case AuthenticationFlow.InteractiveFlow:
+            result = await pca.AcquireTokenInteractive(Config.Scopes)
+                              .ExecuteAsync();
+            break;
+        case AuthenticationFlow.WindowsIntegrated:
+            try{
+                result = await pca.AcquireTokenByIntegratedWindowsAuth(Config.Scopes)
+                                .ExecuteAsync();
+            }
+            catch(PlatformNotSupportedException)
             {
-                Console.WriteLine(deviceCodeResult.Message);
-                return Task.FromResult(0);
-            }).ExecuteAsync();
-    else
-        result = await pca.AcquireTokenInteractive(Config.Scopes)
-                          .ExecuteAsync();
+                result = await pca.AcquireTokenWithDeviceCode(Config.Scopes,
+                    deviceCodeResult =>
+                    {
+                        Console.WriteLine(deviceCodeResult.Message);
+                        return Task.FromResult(0);
+                    }).ExecuteAsync();
+            }
+            break;
+        default:
+            result = null!;
+            break;
+    }
+
+    Console.WriteLine("Novo token adquirido.");
 }
+Console.WriteLine();
 
 if (result is not null)
     await ChamarApiDeCatalogDoBingAds(result.AccessToken);
@@ -51,9 +78,12 @@ async Task ChamarApiDeCatalogDoBingAds(string accessToken)
     client.DefaultRequestHeaders.Add("DeveloperToken", Config.DeveloperToken);
     client.DefaultRequestHeaders.Add("CustomerId", Config.CustomerId);
 
+    Console.WriteLine("Buscando catalogo no BingAds...");
     var result = await client.GetAsync($"shopping/v9.1/bmc/{Config.MerchantId}/catalogs");
 
     result.EnsureSuccessStatusCode();
 
+    Console.WriteLine("Encontrado o catalogo no BingAds:");
     Console.WriteLine(await result.Content.ReadAsStringAsync());
+    Console.WriteLine("");
 }

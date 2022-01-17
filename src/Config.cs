@@ -10,7 +10,7 @@ internal static class Config
     private static string? _developerToken;
     private static string? _customerId;
     private static string? _merchantId;
-    private static bool? _useDeviceCodeFlow;
+    private static AuthenticationFlow? _authenticationFlow;
     private static bool? _useEncriptedCache;
 
     public static IConfiguration Configuration
@@ -56,7 +56,8 @@ internal static class Config
 
     public static string EncryptKey => _encryptKey ??= GetConfig<string>(nameof(EncryptKey));
 
-    public static bool UseDeviceCodeFlow => _useDeviceCodeFlow ??= (GetConfig<bool?>(nameof(UseDeviceCodeFlow)) ?? true);
+    public static AuthenticationFlow AuthenticationFlow => _authenticationFlow ??= (GetConfig<AuthenticationFlow?>(nameof(AuthenticationFlow))
+                                                                                  ?? AuthenticationFlow.DeviceCodeFlow);
 
     public static bool UseEncriptedCache => _useEncriptedCache ??= (GetConfig<bool?>(nameof(UseEncriptedCache)) ?? true);
 
