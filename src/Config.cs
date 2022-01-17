@@ -57,4 +57,10 @@ internal static class Config
     public static bool UseDeviceCodeFlow => GetConfig<bool?>(nameof(UseDeviceCodeFlow)) ?? true;
 
     public static bool UseEncriptedCache => GetConfig<bool?>(nameof(UseEncriptedCache)) ?? true;
+
+    public static string DeveloperToken => GetConfig<string>(nameof(DeveloperToken));
+
+    public static string CustomerId => GetConfig<string>(nameof(CustomerId));
+
+    public static string MerchantId => GetConfig<string>(nameof(MerchantId));
 }

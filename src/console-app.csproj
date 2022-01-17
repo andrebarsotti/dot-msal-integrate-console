@@ -6,7 +6,7 @@
     <RootNamespace>console_app</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <UserSecretsId>msal-integrate-console</UserSecretsId>
+    <UserSecretsId>console-integrate-bing-poc</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

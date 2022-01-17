@@ -39,7 +39,21 @@ catch (MsalUiRequiredException)
 }
 
 if (result is not null)
+    await ChamarApiDeCatalogDoBingAds(result.AccessToken);
+
+
+async Task ChamarApiDeCatalogDoBingAds(string accessToken)
 {
-    Console.WriteLine($"AccessToken => {result.AccessToken};");
-    Console.WriteLine($"TokenType => {result.TokenType};");
+    HttpClient client = new();
+
+    client.BaseAddress = new Uri("https://content.api.bingads.microsoft.com/");
+    client.DefaultRequestHeaders.Add("AuthenticationToken", accessToken);
+    client.DefaultRequestHeaders.Add("DeveloperToken", Config.DeveloperToken);
+    client.DefaultRequestHeaders.Add("CustomerId", Config.CustomerId);
+
+    var result = await client.GetAsync($"shopping/v9.1/bmc/{Config.MerchantId}/catalogs");
+
+    result.EnsureSuccessStatusCode();
+
+    Console.WriteLine(await result.Content.ReadAsStringAsync());
 }
