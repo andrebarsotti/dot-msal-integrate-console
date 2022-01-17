@@ -44,7 +44,7 @@ catch (MsalUiRequiredException)
         case AuthenticationFlow.WindowsIntegrated:
             try{
                 result = await pca.AcquireTokenByIntegratedWindowsAuth(Config.Scopes)
-                                .ExecuteAsync();
+                                  .ExecuteAsync();
             }
             catch(PlatformNotSupportedException)
             {
