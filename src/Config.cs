@@ -58,7 +58,7 @@ internal static class Config
 
     public static bool UseEncriptedCache => GetConfig<bool?>(nameof(UseEncriptedCache)) ?? true;
 
-    public static string DeveloperToken => _developerToken ??=GetConfig<string>(nameof(DeveloperToken));
+    public static string DeveloperToken => _developerToken ??= GetConfig<string>(nameof(DeveloperToken));
 
     public static string CustomerId => _customerId ??= GetConfig<string>(nameof(CustomerId));
 
