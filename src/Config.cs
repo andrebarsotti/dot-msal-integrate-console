@@ -4,12 +4,12 @@ using Microsoft.Identity.Client;
 internal static class Config
 {
     private static IConfiguration _config;
-
     private static PublicClientApplicationOptions _publicClientApplicationOptions;
-
     private static string[] _scopes;
-
     private static string _encryptKey;
+    private static string _developerToken;
+    private static string _customerId;
+    private static string _merchantId;
 
     public static IConfiguration Configuration
     {
@@ -58,9 +58,9 @@ internal static class Config
 
     public static bool UseEncriptedCache => GetConfig<bool?>(nameof(UseEncriptedCache)) ?? true;
 
-    public static string DeveloperToken => GetConfig<string>(nameof(DeveloperToken));
+    public static string DeveloperToken => _developerToken ??=GetConfig<string>(nameof(DeveloperToken));
 
-    public static string CustomerId => GetConfig<string>(nameof(CustomerId));
+    public static string CustomerId => _customerId ??= GetConfig<string>(nameof(CustomerId));
 
-    public static string MerchantId => GetConfig<string>(nameof(MerchantId));
+    public static string MerchantId => _merchantId ??= GetConfig<string>(nameof(MerchantId));
 }
