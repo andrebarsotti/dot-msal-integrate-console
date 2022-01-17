@@ -36,7 +36,7 @@ internal static class TokenCacheHelper
 
     private static string CacheFilePath => Path.Combine(CacheDir, CacheFileName);
 
-    private static string CacheDir => Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+    private static string CacheDir => Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)!;
 
     private static string CacheFileName => $"{Path.GetFileName(System.Reflection.Assembly.GetExecutingAssembly().Location)}.msalcache.bin3";
 

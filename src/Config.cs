@@ -3,13 +3,13 @@ using Microsoft.Identity.Client;
 
 internal static class Config
 {
-    private static IConfiguration _config;
-    private static PublicClientApplicationOptions _publicClientApplicationOptions;
-    private static string[] _scopes;
-    private static string _encryptKey;
-    private static string _developerToken;
-    private static string _customerId;
-    private static string _merchantId;
+    private static IConfiguration? _config;
+    private static PublicClientApplicationOptions? _publicClientApplicationOptions;
+    private static string[]? _scopes;
+    private static string? _encryptKey;
+    private static string? _developerToken;
+    private static string? _customerId;
+    private static string? _merchantId;
     private static bool? _useDeviceCodeFlow;
     private static bool? _useEncriptedCache;
 
@@ -20,7 +20,7 @@ internal static class Config
             if (_config is null)
                 SetConfig();
 
-            return _config;
+            return _config!;
         }
     }
 
