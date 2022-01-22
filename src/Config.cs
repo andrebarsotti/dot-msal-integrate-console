@@ -16,6 +16,8 @@ internal static class Config
     private static bool? _useConfidentialAppFlow;
     private static string? _clientId;
     private static string? _authority;
+    private static string? _baseAddres;
+    private static string? _urlPath;
 
     public static IConfiguration Configuration
     {
@@ -33,7 +35,7 @@ internal static class Config
         _config = new ConfigurationBuilder()
                         .SetBasePath(Directory.GetCurrentDirectory())
                         .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                        .AddUserSecrets("console-integrate-bing-poc")
+                        .AddUserSecrets("msal-integrate-console")
                         .AddEnvironmentVariables()
                         .Build();
     }
@@ -78,4 +80,8 @@ internal static class Config
     public static string ClienteId => _clientId ??= GetConfig<string>("AzureAd:ClientId");
 
     public static string Authority => _authority ??= $"{Config.GetConfig<string>("AzureAd:Instance")}{Config.GetConfig<string>("AzureAd:TenantId")}";
+
+    public static string BaseAddress => _baseAddres ??= Config.GetConfig<string>(nameof(BaseAddress));
+
+    public static string UrlPath => _urlPath ??= Config.GetConfig<string>(nameof(UrlPath));
 }

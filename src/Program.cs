@@ -1,4 +1,5 @@
-﻿using Microsoft.Identity.Client;
+﻿using System.Net.Http.Headers;
+using Microsoft.Identity.Client;
 
 await Main();
 
@@ -10,24 +11,21 @@ async Task Main()
     Console.WriteLine();
 
     if (result is not null)
-        await ChamarApiDeCatalogDoBingAds(result.AccessToken);
+        await CallMicrosoftGraphAPI(result);
 }
 
-async Task ChamarApiDeCatalogDoBingAds(string accessToken)
+async Task CallMicrosoftGraphAPI(AuthenticationResult authentication)
 {
     HttpClient client = new();
 
-    client.BaseAddress = new Uri("https://content.api.bingads.microsoft.com/");
-    client.DefaultRequestHeaders.Add("AuthenticationToken", accessToken);
-    client.DefaultRequestHeaders.Add("DeveloperToken", Config.DeveloperToken);
-    client.DefaultRequestHeaders.Add("CustomerId", Config.CustomerId);
+    client.BaseAddress = new Uri(Config.BaseAddress);
+    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(authentication.TokenType,
+                                                                               authentication.AccessToken);
 
-    Console.WriteLine("Buscando catalogo no BingAds...");
-    var result = await client.GetAsync($"shopping/v9.1/bmc/{Config.MerchantId}/catalogs");
+    var result = await client.GetAsync(Config.UrlPath);
 
     result.EnsureSuccessStatusCode();
 
-    Console.WriteLine("Encontrado o catalogo no BingAds:");
     Console.WriteLine(await result.Content.ReadAsStringAsync());
     Console.WriteLine("");
 }

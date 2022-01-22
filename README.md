@@ -1,8 +1,8 @@
-# POC do uso de Microsoft Authentication Libraries (MSAL) em aplicações console para integração com as apis do Bing Ads.
+# Estudos de uso de Microsoft Authentication Libraries (MSAL) em aplicações console.
 
 ## 1. Sobre
 
-Essa é uma aplicação de estudo da utilização do sdk _Microsoft Authentication Libraries_ (MSAL) em aplicações console para autenticação com o site BingAds.
+Essa é uma aplicação de estudo da utilização do sdk _Microsoft Authentication Libraries_ (MSAL) em aplicações console.
 
 ## 2. Requisitos
 
@@ -47,12 +47,6 @@ No diretório raiz da aplicação digite os seguintes comandos:
 $ cd src
 $ dotnet run
 ```
-
-## 5. Conclusão
-
-Nos testes realizado para integração com as apis do BingAds apenas a utilização de um cliente público (_IPublicClientApplication_) com as autenticações _DeviceCodeFlow_ ou _InteractiveFlow_ tiveram o efeito desejado.
-
-Nos cenários com as autenticações _WindowsIntegrated_ não foi possível fazer autenticação com usuários gerenciados e no casos de autenticação para aplicativos _daemon_ (_IonfidentialClientApplication_) a api do Bing retornou o status de não autorizado (401).
 
 ## Referências
 
