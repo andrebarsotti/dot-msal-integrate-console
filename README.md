@@ -1,4 +1,4 @@
-# Estudos de uso de Microsoft Authentication Libraries (MSAL) em aplicações console.
+# POC do uso de Microsoft Authentication Libraries (MSAL) em aplicações console para integração com as apis do Bing Ads.
 
 ## 1. Sobre
 
