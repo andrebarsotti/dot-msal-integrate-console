@@ -3,13 +3,21 @@ using Microsoft.Identity.Client;
 
 internal static class Config
 {
-    private static IConfiguration _config;
-
-    private static PublicClientApplicationOptions _publicClientApplicationOptions;
-
-    private static string[] _scopes;
-
-    private static string _encryptKey;
+    private static IConfiguration? _config;
+    private static PublicClientApplicationOptions? _publicClientApplicationOptions;
+    private static string[]? _scopes;
+    private static string? _encryptKey;
+    private static string? _developerToken;
+    private static string? _customerId;
+    private static string? _merchantId;
+    private static AuthenticationFlow? _authenticationFlow;
+    private static bool? _useEncriptedCache;
+    private static string? _secretValue;
+    private static bool? _useConfidentialAppFlow;
+    private static string? _clientId;
+    private static string? _authority;
+    private static string? _baseAddres;
+    private static string? _urlPath;
 
     public static IConfiguration Configuration
     {
@@ -18,7 +26,7 @@ internal static class Config
             if (_config is null)
                 SetConfig();
 
-            return _config;
+            return _config!;
         }
     }
 
@@ -54,7 +62,26 @@ internal static class Config
 
     public static string EncryptKey => _encryptKey ??= GetConfig<string>(nameof(EncryptKey));
 
-    public static bool UseDeviceCodeFlow => GetConfig<bool?>(nameof(UseDeviceCodeFlow)) ?? true;
+    public static AuthenticationFlow AuthenticationFlow => _authenticationFlow ??= (GetConfig<AuthenticationFlow?>(nameof(AuthenticationFlow))
+                                                                                  ?? AuthenticationFlow.DeviceCodeFlow);
 
-    public static bool UseEncriptedCache => GetConfig<bool?>(nameof(UseEncriptedCache)) ?? true;
+    public static bool UseEncriptedCache => _useEncriptedCache ??= (GetConfig<bool?>(nameof(UseEncriptedCache)) ?? true);
+
+    public static string DeveloperToken => _developerToken ??= GetConfig<string>(nameof(DeveloperToken));
+
+    public static string CustomerId => _customerId ??= GetConfig<string>(nameof(CustomerId));
+
+    public static string MerchantId => _merchantId ??= GetConfig<string>(nameof(MerchantId));
+
+    public static bool UseConfidentialAppFlow => _useConfidentialAppFlow ??= (GetConfig<bool?>(nameof(UseConfidentialAppFlow)) ?? false);
+
+    public static string SecretValue => _secretValue ??= GetConfig<string>(nameof(SecretValue));
+
+    public static string ClienteId => _clientId ??= GetConfig<string>("AzureAd:ClientId");
+
+    public static string Authority => _authority ??= $"{Config.GetConfig<string>("AzureAd:Instance")}{Config.GetConfig<string>("AzureAd:TenantId")}";
+
+    public static string BaseAddress => _baseAddres ??= Config.GetConfig<string>(nameof(BaseAddress));
+
+    public static string UrlPath => _urlPath ??= Config.GetConfig<string>(nameof(UrlPath));
 }

@@ -22,8 +22,12 @@ O aplicativo aceita as cofigurações através de alteração do _appsetting.jso
 
 Os seguinte parâmetros tem configuração opcional:
 
-* **UseDeviceCodeFlow**: _DeviceCodeFlow_ é o fluxo recomendado pela Microsoft para aplicações que executam em um ambiente sem browser. Seu contraponto em aplicações _CLI_ é o fluxo _Interativo_ que utiliza o browser local do SO. O parâmetro poser True ou False, o _default_ é True.
+* **UseConfidentialAppFlow**: Deternina se seguirá o fluxo de autenticação para aplicações _daemon_ que utilizam um _Secret_ gerado no Azure AD, o _default_ é false.
 * **UseEncriptedCache**: Para evitar que aplicação solicite sempre credências para o usuário é utilizado um cache em um arquivo texto, que pode ou não estar encriptado. O parâmetro pode ser True ou False, o _default_ é True.
+* **AuthenticationFlow**: Determina o tipo de fluxo de uma aplicação com cliente público. Pode ser:
+    - _DeviceCodeFlow_: Utilizado em cenários onde _não_ existe browser na máquina onde o aplicativo console é executado.
+    - _InteractiveFlow_: Utilizado em cenário onde existe um browser na máquina onde o aplicativo console é executado.
+    - _WindowsIntegrated_: Autenticação integrada com o Windows.
 
 Abaixo um exemplo de configuração dos _user secrets_ através de linha de comando:
 
@@ -31,8 +35,6 @@ Abaixo um exemplo de configuração dos _user secrets_ através de linha de coma
 $ dotnet user-secrets set AzureAd:TenantId 9d7978bf-cab0-46b9-b5f8-4e0524ba7eea
 $ dotnet user-secrets set AzureAd:ClientId 36ac5d15-38ea-41b6-b154-eb12c02c3e89
 $ dotnet user-secrets set EncryptKey z4mXxBf8TpEs7bzt
-$ dotnet user-secrets set UseDeviceCodeFlow False
-$ dtonet user-secrets set UseEncriptedCache False
 ```
 
 ## 4. Execução
@@ -47,7 +49,6 @@ $ dotnet run
 ## Referências
 
 MICROSOFT. **Desktop app that calls web APIs: Acquire a token**, 29-set.-2021. Disponível em: <https://docs.microsoft.com/en-us/azure/active-directory/develop/scenario-desktop-acquire-token?tabs=dotnet> Acessado em: 16-jan-2022
-
 
 MICROSOFT. **Token cache serialization in MSAL.NET**, 02-dez.-2021. Disponível em: <https://docs.microsoft.com/en-us/azure/active-directory/develop/msal-net-token-cache-serialization?tabs=aspnetcore> Acessado em: 16-jan-2022
 

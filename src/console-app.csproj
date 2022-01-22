@@ -6,7 +6,7 @@
     <RootNamespace>console_app</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <UserSecretsId>msal-integrate-console</UserSecretsId>
+    <UserSecretsId>console-integrate-bing-poc</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,5 +17,9 @@
     <PackageReference Include="Microsoft.Identity.Client" Version="4.40.0" />
     <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" Version="2.19.3" />
   </ItemGroup>
+
+  <Target Name="CopyAppSettings" AfterTargets="AfterBuild">
+    <Copy SourceFiles="appsettings.json" DestinationFolder="$(OutDir)" />
+  </Target>
 
 </Project>
