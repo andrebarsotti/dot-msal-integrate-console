@@ -35,8 +35,6 @@ Abaixo um exemplo de configuração dos _user secrets_ através de linha de coma
 $ dotnet user-secrets set AzureAd:TenantId 9d7978bf-cab0-46b9-b5f8-4e0524ba7eea
 $ dotnet user-secrets set AzureAd:ClientId 36ac5d15-38ea-41b6-b154-eb12c02c3e89
 $ dotnet user-secrets set EncryptKey z4mXxBf8TpEs7bzt
-$ dotnet user-secrets set UseDeviceCodeFlow False
-$ dtonet user-secrets set UseEncriptedCache False
 ```
 
 ## 4. Execução
