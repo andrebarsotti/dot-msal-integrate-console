@@ -2,7 +2,7 @@
 
 ## 1. Sobre
 
-Essa é uma aplicação de estudo da utilização do sdk _Microsoft Authentication Libraries_ (MSAL) em aplicações console.
+Essa é uma aplicação de estudo da utilização do sdk _Microsoft Authentication Libraries_ (MSAL) em aplicações console para autenticação com o site BingAds.
 
 ## 2. Requisitos
 
@@ -22,8 +22,12 @@ O aplicativo aceita as cofigurações através de alteração do _appsetting.jso
 
 Os seguinte parâmetros tem configuração opcional:
 
-* **UseDeviceCodeFlow**: _DeviceCodeFlow_ é o fluxo recomendado pela Microsoft para aplicações que executam em um ambiente sem browser. Seu contraponto em aplicações _CLI_ é o fluxo _Interativo_ que utiliza o browser local do SO. O parâmetro poser True ou False, o _default_ é True.
+* **UseConfidentialAppFlow**: Deternina se seguirá o fluxo de autenticação para aplicações _daemon_ que utilizam um _Secret_ gerado no Azure AD, o _default_ é false.
 * **UseEncriptedCache**: Para evitar que aplicação solicite sempre credências para o usuário é utilizado um cache em um arquivo texto, que pode ou não estar encriptado. O parâmetro pode ser True ou False, o _default_ é True.
+* **AuthenticationFlow**: Determina o tipo de fluxo de uma aplicação com cliente público. Pode ser:
+    - _DeviceCodeFlow_: Utilizado em cenários onde _não_ existe browser na máquina onde o aplicativo console é executado.
+    - _InteractiveFlow_: Utilizado em cenário onde existe um browser na máquina onde o aplicativo console é executado.
+    - _WindowsIntegrated_: Autenticação integrada com o Windows.
 
 Abaixo um exemplo de configuração dos _user secrets_ através de linha de comando:
 
@@ -44,10 +48,15 @@ $ cd src
 $ dotnet run
 ```
 
+## 5. Conclusão
+
+Nos testes realizado para integração com as apis do BingAds apenas a utilização de um cliente público (_IPublicClientApplication_) com as autenticações _DeviceCodeFlow_ ou _InteractiveFlow_ tiveram o efeito desejado.
+
+Nos cenários com as autenticações _WindowsIntegrated_ não foi possível fazer autenticação com usuários gerenciados e no casos de autenticação para aplicativos _daemon_ (_IonfidentialClientApplication_) a api do Bing retornou o status de não autorizado (401).
+
 ## Referências
 
 MICROSOFT. **Desktop app that calls web APIs: Acquire a token**, 29-set.-2021. Disponível em: <https://docs.microsoft.com/en-us/azure/active-directory/develop/scenario-desktop-acquire-token?tabs=dotnet> Acessado em: 16-jan-2022
-
 
 MICROSOFT. **Token cache serialization in MSAL.NET**, 02-dez.-2021. Disponível em: <https://docs.microsoft.com/en-us/azure/active-directory/develop/msal-net-token-cache-serialization?tabs=aspnetcore> Acessado em: 16-jan-2022
 
