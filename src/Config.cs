@@ -12,6 +12,10 @@ internal static class Config
     private static string? _merchantId;
     private static AuthenticationFlow? _authenticationFlow;
     private static bool? _useEncriptedCache;
+    private static string? _secretValue;
+    private static bool? _useConfidentialAppFlow;
+    private static string? _clientId;
+    private static string? _authority;
 
     public static IConfiguration Configuration
     {
@@ -66,4 +70,12 @@ internal static class Config
     public static string CustomerId => _customerId ??= GetConfig<string>(nameof(CustomerId));
 
     public static string MerchantId => _merchantId ??= GetConfig<string>(nameof(MerchantId));
+
+    public static bool UseConfidentialAppFlow => _useConfidentialAppFlow ??= (GetConfig<bool?>(nameof(UseConfidentialAppFlow)) ?? false);
+
+    public static string SecretValue => _secretValue ??= GetConfig<string>(nameof(SecretValue));
+
+    public static string ClienteId => _clientId ??= GetConfig<string>("AzureAd:ClientId");
+
+    public static string Authority => _authority ??= $"{Config.GetConfig<string>("AzureAd:Instance")}{Config.GetConfig<string>("AzureAd:TenantId")}";
 }
